@@ -14,8 +14,6 @@ A hands-on enterprise infrastructure lab that walks through the full lifecycle o
 
 Most IT certifications teach you *what* things are. This lab was about figuring out *how* they actually work together. I built this to deeply understand how enterprise environments are structured — the kind of environment you walk into on day one at a mid-to-large company — and how to manage it efficiently.
 
-If you're a recruiter or hiring manager: this project demonstrates that I can design, automate, and troubleshoot hybrid Windows infrastructure from scratch.
-
 ---
 
 ## 🗺️ Architecture Overview
