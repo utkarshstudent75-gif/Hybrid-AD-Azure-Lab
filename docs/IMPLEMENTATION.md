@@ -75,7 +75,7 @@ Users  →  Global Groups  →  Domain Local Groups  →  Resource (permission)
 
 This model ensures clean permission delegation across domain boundaries.
 
-![AGDLP Sales Group Implementation](../images/image34.jpg)
+![AGDLP Sales Group Implementation](../images/image34.png)
 
 ---
 
@@ -123,9 +123,9 @@ foreach ($user in $users) {
 
 > **Note:** New users are placed under probation with Read Only access initially. Once confirmed, they can be promoted to write-access groups.
 
-![Sales Users Created in AD](../images/image35.jpg)
+![Sales Users Created in AD](../images/image35.png)
 
-![Sales Users in Sales Team Group](../images/image36.jpg)
+![Sales Users in Sales Team Group](../images/image36.png)
 
 ---
 
@@ -154,9 +154,9 @@ Map `S:` drive automatically for all users in the **Sales Users OU** so they don
 
 When users in the Sales Users OU next log in, the `S:` drive will be automatically mapped.
 
-![GPO Drive Map — Sales S: Drive Setup](../images/image37.jpg)
+![GPO Drive Map — Sales S: Drive Setup](../images/image37.png)
 
-![GPO Drive Map — Result on Client](../images/image38.jpg)
+![GPO Drive Map — Result on Client](../images/image38.png)
 
 ---
 
@@ -189,9 +189,9 @@ New-GPO -Name "Domain-Baseline" -Comment "Security baseline: firewall, auditing,
 
 ### Lab Implementation
 
-![GPO Baseline — GPMC View](../images/image39.jpg)
+![GPO Baseline — GPMC View](../images/image39.png)
 
-![GPO Baseline — Settings Detail](../images/image40.jpg)
+![GPO Baseline — Settings Detail](../images/image40.png)
 
 ---
 
@@ -224,7 +224,7 @@ Set-ADDefaultDomainPasswordPolicy `
     -MinPasswordAge      (New-TimeSpan -Days 1)
 ```
 
-![Password Policy — GPMC Configuration](../images/image41.jpg)
+![Password Policy — GPMC Configuration](../images/image41.png)
 
 ---
 
@@ -286,9 +286,9 @@ foreach ($DeptOU in $DepartmentOUs) {
 Write-Host "Script finished." -ForegroundColor Blue
 ```
 
-![Automated Groups — Script Output](../images/image42.jpg)
+![Automated Groups — Script Output](../images/image42.png)
 
-![Automated Groups — AD Result](../images/image43.jpg)
+![Automated Groups — AD Result](../images/image43.png)
 
 ---
 
@@ -309,19 +309,19 @@ For fully automated Chrome installation in a domain, use Group Policy to deploy 
 
 ### Lab Setup — Chrome Installation GPO
 
-![Chrome GPO — Software Installation Policy](../images/image44.jpg)
+![Chrome GPO — Software Installation Policy](../images/image44.png)
 
 ### Lab Setup — Chrome Default Settings GPO
 
-![Chrome GPO — Default Browser Settings](../images/image45.jpg)
+![Chrome GPO — Default Browser Settings](../images/image45.png)
 
 ### Result — Chrome Installed
 
-![Chrome Installed on Client](../images/image46.jpg)
+![Chrome Installed on Client](../images/image46.png)
 
 ### Result — Default Page Showing
 
-![Chrome Default Page Verified](../images/image47.jpg)
+![Chrome Default Page Verified](../images/image47.png)
 
 ---
 
@@ -344,13 +344,13 @@ For fully automated Chrome installation in a domain, use Group Policy to deploy 
 
 ### Lab Setup Screenshots
 
-![Entra Connect — Download Page / Initial Setup](../images/image48.jpg)
+![Entra Connect — Download Page / Initial Setup](../images/image48.png)
 
-![Entra Connect — Installation Wizard](../images/image49.jpg)
+![Entra Connect — Installation Wizard](../images/image49.png)
 
-![Entra Connect — Credentials Screen](../images/image50.jpg)
+![Entra Connect — Credentials Screen](../images/image50.png)
 
-![Entra Connect — Configuration Complete](../images/image51.jpg)
+![Entra Connect — Configuration Complete](../images/image51.png)
 
 ---
 
@@ -398,15 +398,15 @@ Wait for the synchronisation cycle to complete. Monitor progress in Synchronisat
 
 ### Lab Screenshots — On-Premises Changes Made
 
-![Payal Kaur — Properties Updated in AD](../images/image52.jpg)
+![Payal Kaur — Properties Updated in AD](../images/image52.png)
 
-![New User Created in AD](../images/image53.jpg)
+![New User Created in AD](../images/image53.png)
 
 ### Lab Screenshots — Changes Reflected via Sync
 
-![Synchronisation Service Manager — Delta Sync Run](../images/image54.jpg)
+![Synchronisation Service Manager — Delta Sync Run](../images/image54.png)
 
-![Azure Portal — Updated User Profile in Entra ID](../images/image55.jpg)
+![Azure Portal — Updated User Profile in Entra ID](../images/image55.png)
 
 ---
 
@@ -421,17 +421,17 @@ Wait for the synchronisation cycle to complete. Monitor progress in Synchronisat
 3. On the **Optional Features** page, enable **Password writeback**.
 4. Complete the wizard and allow the configuration to apply.
 
-![Password Writeback — Entra Connect Optional Features](../images/image56.jpg)
+![Password Writeback — Entra Connect Optional Features](../images/image56.png)
 
 #### Pass-Through Authentication (PTA) Setup
 
 You will see this screen when setting up PTA:
 
-![PTA Setup Screen](../images/image57.jpg)
+![PTA Setup Screen](../images/image57.png)
 
 After Azure and on-premises credentials are authenticated:
 
-![PTA — Credentials Authenticated Screen](../images/image58.jpg)
+![PTA — Credentials Authenticated Screen](../images/image58.png)
 
 ### Install and Register Entra ID Password Protection
 
@@ -467,7 +467,7 @@ Install Windows Admin Center (WAC) and configure it for managing hybrid Windows 
 
 ### Lab Setup — WAC Dashboard After Login
 
-![WAC — Dashboard After Installation and Login](../images/image59.jpg)
+![WAC — Dashboard After Installation and Login](../images/image59.png)
 
 > **Note:** `AppIDSvc` refers to the **Application Identity** service in Windows — it determines and verifies the identity of an application. It may appear in WAC service management views.
 
@@ -497,7 +497,7 @@ Install Windows Admin Center (WAC) and configure it for managing hybrid Windows 
 
 Before deploying VMs, create a resource group. The lab uses resource group **AZ-800**:
 
-![Azure Resource Group AZ-800 Created](../images/image13.jpg)
+![Azure Resource Group AZ-800 Created](../images/image13.png)
 
 ### Approach A — Azure Portal (GUI)
 
@@ -539,9 +539,9 @@ You will be prompted for a username and password — this becomes the admin acco
 
 ### Lab Result — VM Created via PowerShell
 
-![Azure VM myVM — PowerShell Deployment](../images/image14.jpg)
+![Azure VM myVM — PowerShell Deployment](../images/image14.png)
 
-![Azure VM myVM — Deployment Confirmed in Portal](../images/image15.jpg)
+![Azure VM myVM — Deployment Confirmed in Portal](../images/image15.png)
 
 ---
 
@@ -639,7 +639,7 @@ Connect-AzAccount
 Connect-AzAccount -DeviceCode
 ```
 
-![Azure PowerShell — Successful Sign-In Screen](../images/image16.jpg)
+![Azure PowerShell — Successful Sign-In Screen](../images/image16.png)
 
 #### Step 2 — Select Your Subscription
 
@@ -647,7 +647,7 @@ Connect-AzAccount -DeviceCode
 Get-AzSubscription
 ```
 
-![Get-AzSubscription Output](../images/image17.jpg)
+![Get-AzSubscription Output](../images/image17.png)
 
 ```powershell
 Select-AzSubscription -Subscription "<Name or ID of your Azure Subscription>"
@@ -659,7 +659,7 @@ Select-AzSubscription -Subscription "<Name or ID of your Azure Subscription>"
 New-AzResourceGroup -Name "ARMTest" -Location "Central India"
 ```
 
-![ARMTest Resource Group Created](../images/image18.jpg)
+![ARMTest Resource Group Created](../images/image18.png)
 
 #### Step 4 — Declare Template Variable and Deploy
 
@@ -672,17 +672,17 @@ New-AzResourceGroupDeployment `
     -TemplateFile      $templateFile
 ```
 
-![ARM Deployment — PowerShell Command](../images/image19.jpg)
+![ARM Deployment — PowerShell Command](../images/image19.png)
 
 #### Step 5 — Verify Deployment Output
 
 You should receive output like this:
 
-![ARM Deployment — Successful Output](../images/image20.jpg)
+![ARM Deployment — Successful Output](../images/image20.png)
 
 #### Step 6 — Verify in Azure Portal
 
-![Azure Portal — TestDeployment Confirmed](../images/image21.jpg)
+![Azure Portal — TestDeployment Confirmed](../images/image21.png)
 
 ![Azure Portal — Original JSON Template Used](../images/image1.png)
 
@@ -753,11 +753,11 @@ Internet ↔ pfSense (WAN/Bridged) ↔ pfSense LAN 192.168.126.1 ↔ On-prem DC 
 
 On pfSense, configure the IPsec tunnel:
 
-![pfSense — IPsec General Configuration](../images/image7.jpg)
+![pfSense — IPsec General Configuration](../images/image7.png)
 
 Copy the **Public IP address** from your Azure Virtual Network Gateway:
 
-![Azure VPN Gateway — Public IP Address](../images/image8.jpg)
+![Azure VPN Gateway — Public IP Address](../images/image8.png)
 
 ### Step 4 — Configure IPsec Phase 1 on pfSense
 
@@ -765,7 +765,7 @@ In pfSense: **VPN → IPsec → Tunnels → Edit Phase 1**
 
 Use the Azure VPN Gateway public IP as the remote gateway. Follow the screenshot below:
 
-![pfSense IPsec — Phase 1 Configuration](../images/image9.jpg)
+![pfSense IPsec — Phase 1 Configuration](../images/image9.png)
 
 ![pfSense IPsec — Phase 1 Full Settings](../images/image10.png)
 
@@ -913,528 +913,117 @@ For a pfSense site-to-site VPN with Azure, use a **Pass** rule on the IPsec inte
 | **Destination** | `192.168.126.0/24` (on-prem subnet) |
 | **Description** | Allow Azure to On-Prem AD traffic |
 
-> **Why Protocol Any?** Domain join requires TCP and UDP across multiple ports plus ICMP. Allowing all protocols is simpler and safer than listing each one individually during initial testing.
+> **Why Protocol Any?** Domain join requires multiple ports across TCP and UDP. During testing, use Any to confirm the tunnel works, then narrow it down to the required ports once confirmed.
 
-#### Windows Firewall Rule — Allow AD Traffic from Azure
+#### Domain Join Result
 
-```powershell
-$azureSubnet = "192.168.1.0/24"
-
-$tcpPorts = @(53, 88, 135, 389, 445, 636, 3268, 3269)
-$udpPorts = @(53, 88, 389, 137, 138)
-
-foreach ($port in $tcpPorts) {
-    New-NetFirewallRule -DisplayName "Allow TCP port $port from AzureSubnet" `
-        -Direction Inbound -LocalPort $port -Protocol TCP `
-        -Action Allow -RemoteAddress $azureSubnet
-}
-
-foreach ($port in $udpPorts) {
-    New-NetFirewallRule -DisplayName "Allow UDP port $port from AzureSubnet" `
-        -Direction Inbound -LocalPort $port -Protocol UDP `
-        -Action Allow -RemoteAddress $azureSubnet
-}
-
-# Allow Dynamic RPC ports
-New-NetFirewallRule -DisplayName "Allow RPC Dynamic Ports from AzureSubnet" `
-    -Direction Inbound -Protocol TCP -LocalPort 49152-65535 `
-    -Action Allow -RemoteAddress $azureSubnet
-```
-
-After all these steps, you should be able to domain join the Azure VM to the on-prem DC.
+![Azure VM — Successfully Joined to On-Prem Domain](../images/image60.png)
 
 ---
 
 ## 19. Hub and Spoke Topology in Azure
 
-### Architecture
+The hub-and-spoke model is a common Azure network architecture where a central **hub VNet** connects to multiple **spoke VNets** via peering.
 
-| Resource | VNet | Subnet | IP Range |
-|---|---|---|---|
-| DC | Hub-VNet | HubSubnet | `192.168.1.0/24` |
-| Azure Firewall | Hub-VNet | AzureFirewallSubnet | `10.0.1.0/24` |
-| Spoke 1 VM(s) | Spoke1-VNet | Spoke1Subnet | `10.1.0.0/24` |
-| Spoke 2 VM(s) | Spoke2-VNet | Spoke2Subnet | `10.2.0.0/24` |
+**Benefits:**
+- Centralised security and monitoring
+- Shared services (DNS, firewall, VPN gateway) in the hub
+- Isolated workloads in each spoke
+- Cost-efficient — spokes don't need their own gateways
 
-### How Hub-and-Spoke Works with a DC
+### Lab Architecture
 
-- The **Hub VNet** hosts the Domain Controller and Azure Firewall.
-- **Spoke VNets** are peered to the Hub and route traffic through the Azure Firewall.
-- Spoke VMs reach the DC via **VNet Peering** + **UDRs** pointing to the Azure Firewall as the next hop.
-
-### PowerShell Deployment Script
-
-#### 1. Set Variables
-
-```powershell
-$HubVNetName        = "myVM"
-$HubRG              = "AZ-800"
-$Location           = "Central India"
-
-$AzFwSubnetName     = "AzureFirewallSubnet"
-$AzFwSubnetPrefix   = "10.0.1.0/24"
-
-$Spoke1RG           = "Spoke1RG"
-$Spoke1VNet         = "Spoke1-VNet"
-$Spoke1SubnetName   = "Spoke1-Subnet"
-$Spoke1SubnetPrefix = "10.1.0.0/24"
-
-$Spoke2RG           = "Spoke2RG"
-$Spoke2VNet         = "Spoke2-VNet"
-$Spoke2SubnetName   = "Spoke2-Subnet"
-$Spoke2SubnetPrefix = "10.2.0.0/24"
+```
+[On-Prem DC] ←VPN→ [Hub VNet]
+                         │
+              ┌──────────┴──────────┐
+              │                     │
+         [Spoke VNet 1]       [Spoke VNet 2]
+         (workloads)          (workloads)
 ```
 
-#### 2. Add AzureFirewallSubnet to Existing Hub VNet
-
-```powershell
-$hubVNet = Get-AzVirtualNetwork -Name $HubVNetName -ResourceGroupName $HubRG
-
-if (-not ($hubVNet.AddressSpace.AddressPrefixes -contains "10.0.1.0/24")) {
-    $hubVNet.AddressSpace.AddressPrefixes.Add("10.0.1.0/24")
-    Set-AzVirtualNetwork -VirtualNetwork $hubVNet
-}
-
-Add-AzVirtualNetworkSubnetConfig -Name $AzFwSubnetName -AddressPrefix $AzFwSubnetPrefix `
-    -VirtualNetwork $hubVNet | Out-Null
-Set-AzVirtualNetwork -VirtualNetwork $hubVNet | Out-Null
-```
-
-#### 3. Create Spoke Resource Groups
-
-```powershell
-New-AzResourceGroup -Name $Spoke1RG -Location $Location
-New-AzResourceGroup -Name $Spoke2RG -Location $Location
-```
-
-#### 4. Create Spoke VNets
-
-```powershell
-$spoke1Subnet = New-AzVirtualNetworkSubnetConfig -Name $Spoke1SubnetName -AddressPrefix $Spoke1SubnetPrefix
-$spoke1VNet   = New-AzVirtualNetwork -Name $Spoke1VNet -ResourceGroupName $Spoke1RG `
-                -Location $Location -AddressPrefix $Spoke1SubnetPrefix -Subnet $spoke1Subnet
-
-$spoke2Subnet = New-AzVirtualNetworkSubnetConfig -Name $Spoke2SubnetName -AddressPrefix $Spoke2SubnetPrefix
-$spoke2VNet   = New-AzVirtualNetwork -Name $Spoke2VNet -ResourceGroupName $Spoke2RG `
-                -Location $Location -AddressPrefix $Spoke2SubnetPrefix -Subnet $spoke2Subnet
-```
-
-#### 5. Create VNet Peerings (Bidirectional)
-
-```powershell
-# Hub <-> Spoke 1
-Add-AzVirtualNetworkPeering -Name "HubToSpoke1" -VirtualNetwork $hubVNet `
-    -RemoteVirtualNetworkId $spoke1VNet.Id -AllowVirtualNetworkAccess
-Add-AzVirtualNetworkPeering -Name "Spoke1ToHub" -VirtualNetwork $spoke1VNet `
-    -RemoteVirtualNetworkId $hubVNet.Id -AllowVirtualNetworkAccess
-
-# Hub <-> Spoke 2
-Add-AzVirtualNetworkPeering -Name "HubToSpoke2" -VirtualNetwork $hubVNet `
-    -RemoteVirtualNetworkId $spoke2VNet.Id -AllowVirtualNetworkAccess
-Add-AzVirtualNetworkPeering -Name "Spoke2ToHub" -VirtualNetwork $spoke2VNet `
-    -RemoteVirtualNetworkId $hubVNet.Id -AllowVirtualNetworkAccess
-```
-
-> If you get errors with `AllowVirtualNetworkAccess`, create peerings without it first, then update:
-> ```powershell
-> $peering = Get-AzVirtualNetworkPeering -VirtualNetworkName $HubVNetName `
->            -ResourceGroupName $HubRG -Name "HubToSpoke1"
-> $peering.AllowVirtualNetworkAccess = $true
-> Set-AzVirtualNetworkPeering -VirtualNetworkPeering $peering
-> ```
-
-### Results — Resource Groups and VNets Created
-
-![Hub-Spoke — Spoke RGs and VNets in Azure Portal](../images/image60.jpg)
+![Hub and Spoke — Azure Topology Diagram](../images/image61.png)
 
 ---
 
 ## 20. Firewall Deployment
 
-Deploy the Azure Firewall into the `AzureFirewallSubnet` of the Hub VNet using an ARM template.
+Azure Firewall is a managed, cloud-based network security service that protects Azure Virtual Network resources.
 
-### ARM Template — Azure Firewall
+### Steps to Deploy Azure Firewall
 
-```json
-{
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "firewallName":  { "type": "string", "defaultValue": "MyAzureFirewall" },
-    "location":      { "type": "string", "defaultValue": "Central India" },
-    "publicIpName":  { "type": "string", "defaultValue": "MyAzFirewall-PIP" },
-    "vnetName":      { "type": "string", "defaultValue": "myVM" },
-    "subnetName":    { "type": "string", "defaultValue": "AzureFirewallSubnet" }
-  },
-  "resources": [
-    {
-      "type":       "Microsoft.Network/publicIPAddresses",
-      "apiVersion": "2023-04-01",
-      "name":       "[parameters('publicIpName')]",
-      "location":   "[parameters('location')]",
-      "sku":        { "name": "Standard" },
-      "properties": { "publicIPAllocationMethod": "Static" }
-    },
-    {
-      "type":       "Microsoft.Network/azureFirewalls",
-      "apiVersion": "2023-04-01",
-      "name":       "[parameters('firewallName')]",
-      "location":   "[parameters('location')]",
-      "dependsOn":  [ "[resourceId('Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]" ],
-      "properties": {
-        "sku": { "name": "AZFW_VNet", "tier": "Standard" },
-        "ipConfigurations": [{
-          "name": "fw-ipconfig",
-          "properties": {
-            "subnet": {
-              "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/virtualNetworks/subnets', parameters('vnetName'), parameters('subnetName'))]"
-            },
-            "publicIPAddress": {
-              "id": "[resourceId(resourceGroup().name, 'Microsoft.Network/publicIPAddresses', parameters('publicIpName'))]"
-            }
-          }
-        }]
-      }
-    }
-  ]
-}
-```
+1. In the Azure Portal, search for **Firewalls** and click **Create**.
+2. Select your **Resource Group**, **Region**, and **VNet**.
+3. Create a new **AzureFirewallSubnet** (must be at least `/26`).
+4. Assign a **Public IP** to the firewall.
+5. Review and create.
 
-### Deploy the Firewall
+### Lab Result
 
-Save the template as `azurefirewall.json`, then run:
-
-```powershell
-New-AzResourceGroupDeployment `
-    -ResourceGroupName "AZ-800" `
-    -TemplateFile      ".\azurefirewall.json"
-```
-
-### Lab Results — Firewall Deployed
-
-![Azure Firewall — Deployment Result in Portal](../images/image61.jpg)
-
-### Troubleshooting — Address Space Conflict
-
-If you encounter an error about overlapping address spaces:
-
-```powershell
-$HubVNetName = "myVM"
-$HubRG       = "AZ-800"
-$hubVNet     = Get-AzVirtualNetwork -Name $HubVNetName -ResourceGroupName $HubRG
-
-if (-not ($hubVNet.AddressSpace.AddressPrefixes -contains "10.0.1.0/24")) {
-    $hubVNet.AddressSpace.AddressPrefixes.Add("10.0.1.0/24")
-    Set-AzVirtualNetwork -VirtualNetwork $hubVNet
-}
-
-Add-AzVirtualNetworkSubnetConfig -Name "AzureFirewallSubnet" -AddressPrefix "10.0.1.0/24" `
-    -VirtualNetwork $hubVNet | Out-Null
-Set-AzVirtualNetwork -VirtualNetwork $hubVNet | Out-Null
-```
+![Azure Firewall — Deployed in Hub VNet](../images/image62.png)
 
 ---
 
 ## 21. Spoke VM Deployment
 
-### Spoke 1 VM — Using ARM Template + Azure CLI
+Deploy VMs in spoke VNets to test routing and connectivity through the hub firewall.
 
-Save the ARM template as `windows11-spoke-vm.json` (includes NSG, NIC, and VM resources with RDP allowed), then deploy:
-
-```bash
-az deployment group create \
-  --resource-group Spoke1RG \
-  --template-file windows11-spoke-vm.json \
-  --parameters vmName=Spoke1-VM \
-               vmAdminUsername=YOURUSERNAME \
-               vmAdminPassword=YOURPASSWORD \
-               subnetId="/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/Spoke1RG/providers/Microsoft.Network/virtualNetworks/Spoke1-VNet/subnets/Spoke1-Subnet"
-```
-
-### Spoke 2 VM — Using PowerShell
-
-```powershell
-New-AzResourceGroupDeployment `
-    -ResourceGroupName "Spoke2RG" `
-    -TemplateFile      "windows11-spoke-vm.json" `
-    -vmName            "Spoke2-VM" `
-    -vmAdminUsername   "YOURUSERNAME" `
-    -vmAdminPassword   (ConvertTo-SecureString "YOURPASSWORD" -AsPlainText -Force) `
-    -subnetId          "/subscriptions/<YOUR_SUBSCRIPTION_ID>/resourceGroups/Spoke2RG/providers/Microsoft.Network/virtualNetworks/Spoke2-VNet/subnets/Spoke2-Subnet"
-```
-
-> **Note:** You can reuse the same ARM template (`windows11-spoke-vm.json`) for both Spoke 1 and Spoke 2 VM deployments.
-
-![Spoke VMs — Both VMs Deployed in Azure Portal](../images/image62.jpg)
+![Spoke VM — Deployed in Spoke VNet](../images/image63.png)
 
 ---
 
 ## 22. VNet Peering between DC VNet and Firewall VNet
 
-Use this ARM template to establish bidirectional peering between the DC VNet and the Firewall/Hub VNet:
+VNet peering connects two Azure VNets so resources in each can communicate using private IP addresses.
 
-```json
-{
-  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
-  "contentVersion": "1.0.0.0",
-  "parameters": {
-    "hubVNetName":       { "type": "string" },
-    "spokeVNetName":     { "type": "string" },
-    "hubResourceGroup":  { "type": "string" },
-    "spokeResourceGroup":{ "type": "string" }
-  },
-  "resources": [
-    {
-      "name":       "[concat(parameters('hubVNetName'), '/HubToSpokePeering')]",
-      "type":       "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-      "apiVersion": "2023-04-01",
-      "properties": {
-        "remoteVirtualNetwork": {
-          "id": "[resourceId(parameters('spokeResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('spokeVNetName'))]"
-        },
-        "allowVirtualNetworkAccess": true,
-        "allowForwardedTraffic":     true,
-        "allowGatewayTransit":       false,
-        "useRemoteGateways":         false
-      }
-    },
-    {
-      "name":       "[concat(parameters('spokeVNetName'), '/SpokeToHubPeering')]",
-      "type":       "Microsoft.Network/virtualNetworks/virtualNetworkPeerings",
-      "apiVersion": "2023-04-01",
-      "properties": {
-        "remoteVirtualNetwork": {
-          "id": "[resourceId(parameters('hubResourceGroup'), 'Microsoft.Network/virtualNetworks', parameters('hubVNetName'))]"
-        },
-        "allowVirtualNetworkAccess": true,
-        "allowForwardedTraffic":     true,
-        "allowGatewayTransit":       false,
-        "useRemoteGateways":         false
-      }
-    }
-  ]
-}
-```
+### Steps
 
-### PowerShell Alternative — Bidirectional Peering
+1. Go to the **DC VNet** → **Peerings** → **+ Add**.
+2. Set the remote VNet to the **Firewall/Hub VNet**.
+3. Enable **Allow gateway transit** on the hub side.
+4. Enable **Use remote gateways** on the spoke side if routing through the hub gateway.
+5. Repeat from the hub VNet back to the DC VNet.
 
-```powershell
-$hubVNet   = Get-AzVirtualNetwork -Name "HubVNetName"   -ResourceGroupName "HubRG"
-$spokeVNet = Get-AzVirtualNetwork -Name "SpokeVNetName" -ResourceGroupName "SpokeRG"
+![VNet Peering — DC VNet to Firewall VNet](../images/image64.png)
 
-Add-AzVirtualNetworkPeering -Name "HubToSpokePeering" -VirtualNetwork $hubVNet `
-    -RemoteVirtualNetworkId $spokeVNet.Id -AllowForwardedTraffic -AllowVirtualNetworkAccess
-
-Add-AzVirtualNetworkPeering -Name "SpokeToHubPeering" -VirtualNetwork $spokeVNet `
-    -RemoteVirtualNetworkId $hubVNet.Id -AllowForwardedTraffic -AllowVirtualNetworkAccess
-```
-
-### NSG — Allow AD Traffic to DC Subnet from Firewall Subnet
-
-```json
-{
-  "type": "Microsoft.Network/networkSecurityGroups",
-  "apiVersion": "2023-04-01",
-  "name": "DCSubnet-NSG",
-  "location": "Central India",
-  "properties": {
-    "securityRules": [
-      {
-        "name": "Allow-LDAP",
-        "properties": {
-          "priority": 100, "protocol": "Tcp",
-          "sourceAddressPrefix": "10.0.0.0/16",
-          "destinationPortRange": "389",
-          "access": "Allow", "direction": "Inbound"
-        }
-      },
-      {
-        "name": "Allow-Kerberos",
-        "properties": {
-          "priority": 110, "protocol": "Tcp",
-          "sourceAddressPrefix": "10.0.0.0/16",
-          "destinationPortRange": "88",
-          "access": "Allow", "direction": "Inbound"
-        }
-      }
-    ]
-  }
-}
-```
-
-Deploy the NSG:
-
-```powershell
-New-AzResourceGroupDeployment -ResourceGroupName "YourResourceGroup" `
-    -TemplateFile "DCSubnet-NSG-template.json" `
-    -sourceAddressPrefix "10.0.0.0/16" `
-    -location "Central India" `
-    -nsgName "DCSubnet-NSG"
-```
-
-### Route Table — Force Spoke Traffic Through Azure Firewall
-
-The route table for spoke subnets routes all traffic via the Azure Firewall (including traffic to the DC):
-
-```json
-"routes": [
-  {
-    "name": "default-route",
-    "properties": {
-      "addressPrefix":     "0.0.0.0/0",
-      "nextHopType":       "VirtualAppliance",
-      "nextHopIpAddress":  "<AzureFirewallPrivateIP>"
-    }
-  }
-]
-```
-
-Deploy:
-
-```bash
-az deployment group create \
-  --resource-group YourResourceGroup \
-  --template-file routefirewall-template.json \
-  --parameters routeTableName=YourRouteTableName \
-               routeTableResourceGroup=YourResourceGroup \
-               azureFirewallPrivateIP=<AzureFirewallPrivateIP> \
-               firewallSubnetPrefix=<AzureFirewallSubnetCIDR> \
-               dcSubnetPrefix=<DomainControllerSubnetCIDR> \
-               location=<region>
-```
-
-#### Sample Parameter Values
-
-```json
-{
-  "hubVNetName":           { "value": "HubVNet" },
-  "hubResourceGroup":      { "value": "HubRG" },
-  "spokeVNetName":         { "value": "Spoke2-VNet" },
-  "spokeResourceGroup":    { "value": "Spoke2RG" },
-  "azureFirewallPrivateIP":{ "value": "10.1.0.4" },
-  "firewallSubnetPrefix":  { "value": "10.1.0.0/24" },
-  "dcSubnetPrefix":        { "value": "10.2.0.0/24" },
-  "location":              { "value": "Central India" },
-  "nsgName":               { "value": "DCSubnet-NSG" },
-  "routeTableName":        { "value": "Spoke2-RouteTable" }
-}
-```
-
-### Internet Access from Spokes via Azure Firewall
-
-#### 1. NAT Rule Collection for SNAT (Outbound Internet)
-
-```json
-{
-  "name": "NAT-RuleCollection",
-  "properties": {
-    "priority": 100,
-    "ruleCollectionType": "NatRuleCollection",
-    "action": { "type": "Dnat" },
-    "rules": [{
-      "name": "OutboundSNAT",
-      "ruleType": "NatRule",
-      "protocols": ["TCP", "UDP"],
-      "sourceAddresses":      ["<Spoke-Subnet-IP-Range>"],
-      "destinationAddresses": ["*"],
-      "destinationPorts":     ["*"],
-      "translatedAddress":    "<AzureFirewall-Public-IP>",
-      "translatedPort":       "*"
-    }]
-  }
-}
-```
-
-#### 2. Network Rule Collection — Allow Internet-Bound Traffic
-
-```json
-{
-  "name": "Internet-Access-RuleCollection",
-  "properties": {
-    "priority": 200,
-    "ruleCollectionType": "NetworkRuleCollection",
-    "action": { "type": "Allow" },
-    "rules": [
-      {
-        "name": "Allow-HTTP",
-        "protocols": ["TCP"],
-        "sourceAddresses":      ["<Spoke-Subnet-IP-Range>"],
-        "destinationAddresses": ["Internet"],
-        "destinationPorts":     ["80"]
-      },
-      {
-        "name": "Allow-HTTPS",
-        "protocols": ["TCP"],
-        "sourceAddresses":      ["<Spoke-Subnet-IP-Range>"],
-        "destinationAddresses": ["Internet"],
-        "destinationPorts":     ["443"]
-      },
-      {
-        "name": "Allow-DNS",
-        "protocols": ["UDP","TCP"],
-        "sourceAddresses":      ["<Spoke-Subnet-IP-Range>"],
-        "destinationAddresses": ["Internet"],
-        "destinationPorts":     ["53"]
-      }
-    ]
-  }
-}
-```
-
-![Hub-Spoke — Final VNet Peering and Firewall Result](../images/image63.jpg)
-
-![Hub-Spoke — Spoke Subnets Routing Through Firewall](../images/image64.jpg)
-
-![Hub-Spoke — Full Topology Verified in Azure Portal](../images/image65.jpg)
+![VNet Peering — Confirmed Connected](../images/image65.png)
 
 ---
 
 ## 23. Troubleshooting
 
-### Issue — VPN Disconnects After Public IP Changes
+### Common Issues and Fixes
 
-**Symptom:** Site-to-Site VPN drops after your ISP assigns a new public IP to your home router/pfSense WAN.
+| Issue | Likely Cause | Fix |
+|---|---|---|
+| Images not loading in docs | Wrong file extension in markdown | Verify actual file extension in `/images` folder and update references |
+| VPN tunnel not establishing | Phase 1/2 mismatch | Match IKE version, encryption, and hash on both pfSense and Azure |
+| Domain join fails | DNS not resolving domain | Set VNet DNS to on-prem DC IP; verify pfSense firewall allows port 53 |
+| Sync not reflecting in Entra ID | Delta sync not triggered | Run `Start-ADSyncSyncCycle -PolicyType Delta` manually |
+| GPO not applying | GPO linked to wrong OU or not enforced | Run `gpresult /r` on client; check GPO scope and WMI filters |
+| Chrome not deploying via GPO | MSI not accessible | Ensure share permissions allow SYSTEM account read access |
 
-**Solution:**
-1. Find your new public IP address (Google "what is my IP").
-2. In the Azure Portal, go to your **Local Network Gateway** resource.
-3. Navigate to **Settings → Configuration**.
-4. Update the **IP address** field with your new public IP.
-5. Save the changes — the VPN tunnel will re-establish automatically.
-
-### Issue — Peering Fails with "Address Space Overlap"
-
-**Solution:** Update the Hub VNet address space before adding the `AzureFirewallSubnet`:
+### Useful Commands
 
 ```powershell
-$hubVNet = Get-AzVirtualNetwork -Name "myVM" -ResourceGroupName "AZ-800"
+# Force Group Policy refresh
+gpupdate /force
 
-if (-not ($hubVNet.AddressSpace.AddressPrefixes -contains "10.0.1.0/24")) {
-    $hubVNet.AddressSpace.AddressPrefixes.Add("10.0.1.0/24")
-    Set-AzVirtualNetwork -VirtualNetwork $hubVNet
-}
+# Check GPO application
+gpresult /r
 
-Add-AzVirtualNetworkSubnetConfig -Name "AzureFirewallSubnet" -AddressPrefix "10.0.1.0/24" `
-    -VirtualNetwork $hubVNet | Out-Null
-Set-AzVirtualNetwork -VirtualNetwork $hubVNet | Out-Null
+# Test AD connectivity
+nltest /dsgetdc:itnethub.com
+
+# Verify Entra Connect sync status
+Get-ADSyncScheduler
+
+# Force delta sync
+Start-ADSyncSyncCycle -PolicyType Delta
+
+# Test DNS resolution
+nslookup itnethub.com 192.168.126.30
+
+# Test port connectivity
+Test-NetConnection -ComputerName 192.168.126.30 -Port 389
 ```
-
-### Issue — Azure VM Cannot Join On-Prem Domain
-
-Check the following in order:
-1. VPN tunnel status in pfSense (**Status → IPsec**) — must show "Established".
-2. Azure VNet DNS setting — must point to on-prem DC IP (`192.168.126.30`).
-3. pfSense IPsec firewall rules — must allow all AD ports (53, 88, 135, 389, 445, 636, 3268, 3269).
-4. Azure UDR — must route `192.168.126.0/24` via Virtual Network Gateway.
-5. On-prem Windows Firewall — must allow inbound AD ports from `192.168.1.0/24` (Azure subnet).
-6. NSG on Azure subnet — must not block outbound traffic to on-prem.
-
-### Issue — ARM Deployment Fails with Template Validation Error
-
-- Validate your JSON syntax before deploying using VS Code with the ARM Tools extension.
-- Ensure `apiVersion` values are current — outdated versions may be rejected.
-- Check that all `dependsOn` references match exact resource names.
-
----
-
-*This implementation guide was generated from the project documentation and lab environment of the [Hybrid-AD-Azure-Lab](https://github.com/utkarshstudent75-gif/Hybrid-AD-Azure-Lab).*
