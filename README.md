@@ -96,6 +96,8 @@ The lab is built around a hub-and-spoke hybrid model. On-premises AD DS is the i
 ```
 Hybrid-AD-Azure-Lab/
 ├── README.md                  # This file
+├── docs/
+│   └── IMPLEMENTATION.md      # Full step-by-step build notes
 ├── scripts/
 │   ├── README.md              # Scripts overview
 │   ├── bulk-user-creation.ps1 # CSV-based user onboarding
@@ -105,14 +107,8 @@ Hybrid-AD-Azure-Lab/
 ├── templates/
 │   ├── README.md              # ARM templates overview
 │   └── hub-vnet.json          # Hub VNet ARM template
-├── docs/
-│   ├── README.md              # Documentation index
-│   ├── ou-design.md           # OU design decisions
-│   ├── agdlp-model.md         # AGDLP implementation guide
-│   ├── gpo-baseline.md        # GPO baseline notes
-│   └── entra-sync.md          # Entra Connect setup notes
 └── images/
-    └── README.md              # Screenshots index
+    └── (all screenshots)
 ```
 
 ---
@@ -121,7 +117,13 @@ Hybrid-AD-Azure-Lab/
 
 ### 1. OU Design
 
-The OU structure mirrors operational and administrative needs rather than physical locations. Each department (Sales, HR, Finance, IT) has a parent OU with separate `Users` and `Computers` sub-OUs under an `HQ Toronto` root.
+The OU structure mirrors operational and administrative needs rather than physical locations. Each department has a parent OU with separate `Users` and `Computers` sub-OUs under an `HQ Toronto` root.
+
+![OU design example](./images/image11.png)
+
+![AGDLP example](./images/image47.png)
+
+![AGDLP resource access](./images/image50.png)
 
 **Best practices followed:**
 - Flat hierarchy — max 2–3 levels deep
@@ -152,13 +154,25 @@ This pattern keeps permissions clean, auditable, and easy to change. Swapping ac
 
 ### 3. PowerShell Onboarding Automation
 
-Users are created from a CSV file. The script handles:
-- Account creation with correct OU placement
-- Group membership assignment
-- Password setup + forced change at first login
-- Scalable to hundreds of users with a single run
+Users are created from a CSV file. The script handles account creation, group membership, password setup, and forced change at first login.
 
-See [`scripts/bulk-user-creation.ps1`](./scripts/bulk-user-creation.ps1)
+![PowerShell onboarding](./images/image48.png)
+
+![User creation example](./images/image49.png)
+
+![PowerShell script output](./images/image51.png)
+
+### Department OU and Group Provisioning
+
+A single script iterates every department OU under HQ Toronto and automatically creates Users/Computers sub-OUs and five security groups per department.
+
+![Department OU automation](./images/image52.png)
+
+![Department group automation](./images/image53.png)
+
+![Department group results](./images/image54.png)
+
+See [`scripts/bulk-user-creation.ps1`](./scripts/bulk-user-creation.ps1) and [`scripts/dept-ou-groups.ps1`](./scripts/dept-ou-groups.ps1)
 
 ---
 
@@ -171,12 +185,63 @@ See [`scripts/bulk-user-creation.ps1`](./scripts/bulk-user-creation.ps1)
 | ChromeInstallation | Company OU | Deploy Chrome MSI via software installation |
 | ChromeHomeBrowser | Company OU | Set default homepage via ADMX template |
 
+### Password Policy
+
+![Password policy](./images/image51.png)
+
+### Chrome Deployment
+
+![Chrome software install](./images/image57.png)
+
+![Chrome assigned app](./images/image55.png)
+
+![Chrome templates](./images/image56.png)
+
+![Chrome GPO created](./images/image58.png)
+
+![Chrome settings](./images/image59.png)
+
+![Chrome startup page](./images/image60.png)
+
+![Chrome installed](./images/image61.png)
+
+![Chrome default page](./images/image62.png)
+
 ---
 
 ### 5. Microsoft Entra Connect & Hybrid Identity
 
-Entra Connect was installed on the domain controller to sync on-premises identities to Microsoft Entra ID. Features configured:
+Entra Connect was installed on the domain controller to sync on-premises identities to Microsoft Entra ID.
 
+![Entra Connect wizard](./images/image64.png)
+
+![Entra Connect credentials](./images/image65.png)
+
+### Sync Verification
+
+On-premises user changes and new account creations were verified in Microsoft Entra ID after a delta sync cycle.
+
+![On-prem change](./images/image36.png)
+
+![User update example](./images/image37.png)
+
+![New user created](./images/image38.png)
+
+![Sync result](./images/image39.png)
+
+![Changes reflected in Entra ID](./images/image40.png)
+
+![Verification result](./images/image41.png)
+
+### Password Writeback and PTA
+
+![Password writeback setup](./images/image42.png)
+
+![PTA authenticated](./images/image43.png)
+
+![Password protection](./images/image44.png)
+
+Features configured:
 - **Delta Sync** — incremental syncs triggered via `Start-ADSyncSyncCycle -PolicyType Delta`
 - **Password Writeback** — cloud password resets flow back to on-prem AD
 - **Pass-Through Authentication (PTA)** — users authenticate against on-prem AD, no password hash stored in Azure
@@ -203,9 +268,9 @@ This project pushed me to go beyond just following documentation. Here are the r
 
 - **OU design is a policy problem, not an org chart problem.** The moment I stopped thinking about hierarchy and started thinking about "what GPO does this object need" — the design became much cleaner.
 - **AGDLP feels bureaucratic until you have to audit access.** Then it's the only sane way to manage permissions at scale.
-- **PowerShell is the difference between doing a task once and doing it 500 times.** Writing the onboarding script forced me to think about edge cases (does the OU exist? does the group exist?) rather than just happy-path steps.
+- **PowerShell is the difference between doing a task once and doing it 500 times.** Writing the onboarding script forced me to think about edge cases rather than just happy-path steps.
 - **Hybrid identity is where things get real.** Getting Entra Connect working, verifying sync, and enabling writeback taught me more about how modern identity actually works than any study material.
-- **Azure is just infrastructure — it needs the same discipline as on-prem.** Naming conventions, resource groups, tagging, and ARM templates are just as important in the cloud.
+- **Azure is just infrastructure — it needs the same discipline as on-prem.** Naming conventions, resource groups, and ARM templates are just as important in the cloud.
 
 ---
 
@@ -220,17 +285,9 @@ This project pushed me to go beyond just following documentation. Here are the r
 
 ---
 
-## 📸 Screenshots
+## 📖 Detailed Documentation
 
-Screenshots for each major section are being added to the [`images/`](./images/) folder. Planned captures include:
-- OU structure in ADUC
-- AGDLP group nesting
-- PowerShell onboarding output
-- GPO drive mapping and Chrome deployment
-- Entra Connect sync status
-- Azure resource group and VM
-- ARM template deployment output
-- Windows Admin Center dashboard
+For the full step-by-step build process, scripts, troubleshooting notes, and Azure networking details, see [docs/IMPLEMENTATION.md](./docs/IMPLEMENTATION.md).
 
 ---
 
