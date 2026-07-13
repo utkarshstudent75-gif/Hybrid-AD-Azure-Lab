@@ -1,0 +1,294 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]",
+      "metadata": {
+        "description": "Azure region for all resources. Defaults to the resource group location."
+      }
+    },
+    "hubVnetName": {
+      "type": "string",
+      "defaultValue": "hub-vnet",
+      "metadata": {
+        "description": "Name of the hub Virtual Network."
+      }
+    },
+    "hubVnetAddressPrefix": {
+      "type": "string",
+      "defaultValue": "192.168.1.0/24",
+      "metadata": {
+        "description": "Address space for the hub VNet. Must not overlap with on-premises (192.168.126.0/24)."
+      }
+    },
+    "gatewaySubnetPrefix": {
+      "type": "string",
+      "defaultValue": "192.168.1.224/27",
+      "metadata": {
+        "description": "Subnet for the VPN/ExpressRoute Gateway. Must be named GatewaySubnet."
+      }
+    },
+    "firewallSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "192.168.1.0/26",
+      "metadata": {
+        "description": "Subnet for Azure Firewall. Must be named AzureFirewallSubnet and at least /26."
+      }
+    },
+    "managementSubnetPrefix": {
+      "type": "string",
+      "defaultValue": "192.168.1.64/27",
+      "metadata": {
+        "description": "Subnet for management VMs and domain controllers in Azure."
+      }
+    },
+    "vpnGatewayName": {
+      "type": "string",
+      "defaultValue": "hub-vpn-gateway",
+      "metadata": {
+        "description": "Name of the Virtual Network Gateway (Site-to-Site VPN)."
+      }
+    },
+    "vpnGatewayPublicIpName": {
+      "type": "string",
+      "defaultValue": "hub-vpn-gateway-pip",
+      "metadata": {
+        "description": "Name of the Public IP address for the VPN Gateway."
+      }
+    },
+    "localNetworkGatewayName": {
+      "type": "string",
+      "defaultValue": "onprem-local-gateway",
+      "metadata": {
+        "description": "Name of the Local Network Gateway representing the on-premises network."
+      }
+    },
+    "onPremPublicIp": {
+      "type": "string",
+      "metadata": {
+        "description": "Public IP address of the on-premises VPN device (pfSense WAN IP)."
+      }
+    },
+    "onPremAddressPrefix": {
+      "type": "string",
+      "defaultValue": "192.168.126.0/24",
+      "metadata": {
+        "description": "On-premises network address space to be routed through the VPN tunnel."
+      }
+    },
+    "vpnSharedKey": {
+      "type": "securestring",
+      "metadata": {
+        "description": "Pre-shared key (PSK) for the Site-to-Site VPN connection. Must match pfSense Phase 1 configuration."
+      }
+    },
+    "firewallName": {
+      "type": "string",
+      "defaultValue": "hub-firewall",
+      "metadata": {
+        "description": "Name of the Azure Firewall deployed in the hub VNet."
+      }
+    },
+    "firewallPublicIpName": {
+      "type": "string",
+      "defaultValue": "hub-firewall-pip",
+      "metadata": {
+        "description": "Name of the Public IP address for the Azure Firewall."
+      }
+    }
+  },
+  "variables": {
+    "gatewaySubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('hubVnetName'), 'GatewaySubnet')]",
+    "firewallSubnetId": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('hubVnetName'), 'AzureFirewallSubnet')]",
+    "connectionName": "hub-to-onprem-connection"
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Network/virtualNetworks",
+      "apiVersion": "2023-04-01",
+      "name": "[parameters('hubVnetName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "addressSpace": {
+          "addressPrefixes": [
+            "[parameters('hubVnetAddressPrefix')]"
+          ]
+        },
+        "subnets": [
+          {
+            "name": "GatewaySubnet",
+            "properties": {
+              "addressPrefix": "[parameters('gatewaySubnetPrefix')]"
+            }
+          },
+          {
+            "name": "AzureFirewallSubnet",
+            "properties": {
+              "addressPrefix": "[parameters('firewallSubnetPrefix')]"
+            }
+          },
+          {
+            "name": "ManagementSubnet",
+            "properties": {
+              "addressPrefix": "[parameters('managementSubnetPrefix')]"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2023-04-01",
+      "name": "[parameters('vpnGatewayPublicIpName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static"
+      }
+    },
+    {
+      "type": "Microsoft.Network/publicIPAddresses",
+      "apiVersion": "2023-04-01",
+      "name": "[parameters('firewallPublicIpName')]",
+      "location": "[parameters('location')]",
+      "sku": {
+        "name": "Standard"
+      },
+      "properties": {
+        "publicIPAllocationMethod": "Static"
+      }
+    },
+    {
+      "type": "Microsoft.Network/virtualNetworkGateways",
+      "apiVersion": "2023-04-01",
+      "name": "[parameters('vpnGatewayName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('hubVnetName'))]",
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vpnGatewayPublicIpName'))]"
+      ],
+      "properties": {
+        "gatewayType": "Vpn",
+        "vpnType": "RouteBased",
+        "sku": {
+          "name": "VpnGw1",
+          "tier": "VpnGw1"
+        },
+        "ipConfigurations": [
+          {
+            "name": "gatewayIpConfig",
+            "properties": {
+              "privateIPAllocationMethod": "Dynamic",
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('vpnGatewayPublicIpName'))]"
+              },
+              "subnet": {
+                "id": "[variables('gatewaySubnetId')]"
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "type": "Microsoft.Network/localNetworkGateways",
+      "apiVersion": "2023-04-01",
+      "name": "[parameters('localNetworkGatewayName')]",
+      "location": "[parameters('location')]",
+      "properties": {
+        "gatewayIpAddress": "[parameters('onPremPublicIp')]",
+        "localNetworkAddressSpace": {
+          "addressPrefixes": [
+            "[parameters('onPremAddressPrefix')]"
+          ]
+        }
+      }
+    },
+    {
+      "type": "Microsoft.Network/connections",
+      "apiVersion": "2023-04-01",
+      "name": "[variables('connectionName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('vpnGatewayName'))]",
+        "[resourceId('Microsoft.Network/localNetworkGateways', parameters('localNetworkGatewayName'))]"
+      ],
+      "properties": {
+        "connectionType": "IPsec",
+        "virtualNetworkGateway1": {
+          "id": "[resourceId('Microsoft.Network/virtualNetworkGateways', parameters('vpnGatewayName'))]"
+        },
+        "localNetworkGateway2": {
+          "id": "[resourceId('Microsoft.Network/localNetworkGateways', parameters('localNetworkGatewayName'))]"
+        },
+        "sharedKey": "[parameters('vpnSharedKey')]"
+      }
+    },
+    {
+      "type": "Microsoft.Network/azureFirewalls",
+      "apiVersion": "2023-04-01",
+      "name": "[parameters('firewallName')]",
+      "location": "[parameters('location')]",
+      "dependsOn": [
+        "[resourceId('Microsoft.Network/virtualNetworks', parameters('hubVnetName'))]",
+        "[resourceId('Microsoft.Network/publicIPAddresses', parameters('firewallPublicIpName'))]"
+      ],
+      "properties": {
+        "sku": {
+          "name": "AZFW_VNet",
+          "tier": "Standard"
+        },
+        "ipConfigurations": [
+          {
+            "name": "firewallIpConfig",
+            "properties": {
+              "publicIPAddress": {
+                "id": "[resourceId('Microsoft.Network/publicIPAddresses', parameters('firewallPublicIpName'))]"
+              },
+              "subnet": {
+                "id": "[variables('firewallSubnetId')]"
+              }
+            }
+          }
+        ],
+        "applicationRuleCollections": [],
+        "networkRuleCollections": [],
+        "natRuleCollections": []
+      }
+    }
+  ],
+  "outputs": {
+    "hubVnetId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/virtualNetworks', parameters('hubVnetName'))]",
+      "metadata": {
+        "description": "Resource ID of the hub VNet. Use this when configuring VNet peering from spoke VNets."
+      }
+    },
+    "vpnGatewayPublicIp": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/publicIPAddresses', parameters('vpnGatewayPublicIpName'))).ipAddress]",
+      "metadata": {
+        "description": "Public IP of the VPN Gateway. Enter this as the remote gateway IP in pfSense Phase 1 configuration."
+      }
+    },
+    "firewallPrivateIp": {
+      "type": "string",
+      "value": "[reference(resourceId('Microsoft.Network/azureFirewalls', parameters('firewallName'))).ipConfigurations[0].properties.privateIPAddress]",
+      "metadata": {
+        "description": "Private IP of the Azure Firewall. Use this as the next hop in spoke VNet route tables."
+      }
+    },
+    "managementSubnetId": {
+      "type": "string",
+      "value": "[resourceId('Microsoft.Network/virtualNetworks/subnets', parameters('hubVnetName'), 'ManagementSubnet')]",
+      "metadata": {
+        "description": "Resource ID of the Management Subnet. Use this when deploying Azure DC or management VMs."
+      }
+    }
+  }
+}
