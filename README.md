@@ -21,6 +21,9 @@ Most IT certifications teach you *what* things are. This lab was about figuring 
 The lab is built around a hub-and-spoke hybrid model. On-premises AD DS is the identity source, synced to Microsoft Entra ID via Entra Connect. Azure hosts a domain controller replica and connected workloads through a Site-to-Site VPN.
 
 ```
+<img width="1536" height="1024" alt="ChatGPT Image Jul 13, 2026, 09_25_28 PM" src="https://github.com/user-attachments/assets/32ad56ca-a627-4094-b10d-a6dd8e9b9144" />
+
+
 ┌─────────────────────────────────────────────────────────────────┐
 │                        ON-PREMISES ENVIRONMENT                  │
 │                                                                  │
